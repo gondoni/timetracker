@@ -2,18 +2,18 @@ CREATE DATABASE timetracker;
 USE timetracker;
 
 CREATE TABLE hibernate_sequence (next_val bigint);
-INSERT INTO hibernate_sequence values (1);
+INSERT INTO hibernate_sequence VALUES (1);
 
-CREATE TABLE project (id bigint not null, code varchar(255), description varchar(255), name varchar(255), primary key (id));
-CREATE TABLE task (id bigint not null, code varchar(255), description varchar(255), project_id bigint, primary key (id));
-CREATE TABLE user (id bigint not null, name varchar(255), password varchar(255), username varchar(255), primary key (id));
+CREATE TABLE project (id bigint not null, code varchar(255), description varchar(255), name varchar(255), PRIMARY KEY (id));
+CREATE TABLE task (id bigint not null, code varchar(255), description varchar(255), project_id bigint, PRIMARY KEY (id));
+CREATE TABLE user (id bigint not null, name varchar(255), password varchar(255), username varchar(255), PRIMARY KEY (id));
 CREATE TABLE usertask (id bigint not null, task_id bigint, user_id bigint, primary key (id));
-CREATE TABLE fulfillment (id bigint not null, description varchar(255), fulfill_date datetime, hours float, usertask_id bigint, primary key (id));
+CREATE TABLE fulfillment (id bigint not null, description varchar(255), fulfill_date datetime, hours float, usertask_id bigint, PRIMARY KEY (id));
 
 ALTER TABLE fulfillment ADD CONSTRAINT FK35sjqk96ytfh77s7bvhgnwtcg FOREIGN KEY (usertask_id) REFERENCES usertask (id);
-ALTER TABLE task ADD CONSTRAINT FKk8qrwowg31kx7hp93sru1pdqa foreign key (project_id) REFERENCES project (id);
-ALTER TABLE usertask ADD CONSTRAINT FKcqmn9epf69s9d0qfoxnub0y17 foreign key (task_id) REFERENCES task (id);
-ALTER TABLE usertask ADD CONSTRAINT FK4chcfbnup91ka795vahh3il51 foreign key (user_id) REFERENCES user (id);
+ALTER TABLE task ADD CONSTRAINT FKk8qrwowg31kx7hp93sru1pdqa FOREIGN KEY (project_id) REFERENCES project (id);
+ALTER TABLE usertask ADD CONSTRAINT FKcqmn9epf69s9d0qfoxnub0y17 FOREIGN KEY (task_id) REFERENCES task (id);
+ALTER TABLE usertask ADD CONSTRAINT FK4chcfbnup91ka795vahh3il51 FOREIGN KEY (user_id) REFERENCES user (id);
 
 INSERT INTO user (id, name, username, password) VALUES (1, 'Nagy Feri', 'nferi', 'pwd');
 INSERT INTO user (id, name, username, password) VALUES (2, 'Kis Vili', 'kvili', 'pwd');
