@@ -2,11 +2,11 @@ CREATE DATABASE timetracker;
 USE timetracker;
 
 CREATE TABLE hibernate_sequence (next_val bigint);
-INSERT INTO hibernate_sequence VALUES (1);
+INSERT INTO hibernate_sequence VALUES (1000);
 
 CREATE TABLE project (id bigint not null, code varchar(255), description varchar(255), name varchar(255), PRIMARY KEY (id));
 CREATE TABLE task (id bigint not null, code varchar(255), description varchar(255), project_id bigint, PRIMARY KEY (id));
-CREATE TABLE user (id bigint not null, name varchar(255), password varchar(255), username varchar(255), PRIMARY KEY (id));
+CREATE TABLE user (id bigint not null, name varchar(255), password varchar(255), username varchar(255), PRIMARY KEY (id), UNIQUE KEY unique_username (username));
 CREATE TABLE usertask (id bigint not null, task_id bigint, user_id bigint, primary key (id));
 CREATE TABLE fulfillment (id bigint not null, description varchar(255), fulfill_date datetime, hours float, usertask_id bigint, PRIMARY KEY (id));
 
@@ -39,7 +39,7 @@ INSERT INTO usertask (id, user_id, task_id) VALUES (6, (SELECT id FROM user WHER
 INSERT INTO usertask (id, user_id, task_id) VALUES (7, (SELECT id FROM user WHERE username = 'szvirag'), (SELECT id FROM task WHERE code = 'F21'));
 INSERT INTO usertask (id, user_id, task_id) VALUES (8, (SELECT id FROM user WHERE username = 'ezede'), (SELECT id FROM task WHERE code = 'F11'));
 INSERT INTO usertask (id, user_id, task_id) VALUES (9, (SELECT id FROM user WHERE username = 'ezede'), (SELECT id FROM task WHERE code = 'F21'));
-INSERT INTO usertask (id, user_id, task_id) VALUES (10, (SELECT id FROM user WHERE username = 'mmano2'), (SELECT id FROM task WHERE code = 'F22'));
+INSERT INTO usertask (id, user_id, task_id) VALUES (10, (SELECT id FROM user WHERE username = 'mmano'), (SELECT id FROM task WHERE code = 'F22'));
 
 INSERT INTO fulfillment (id, description, fulfill_date, hours, usertask_id) VALUES (1, 'Ez gyors volt!', CURDATE(), 1.5, (SELECT id FROM usertask WHERE user_id = (SELECT id FROM user WHERE username = 'nferi') and task_id = (SELECT id FROM task WHERE code = 'F12')));
 INSERT INTO fulfillment (id, description, fulfill_date, hours, usertask_id) VALUES (2, 'Ez könnyű volt!', DATE_SUB(CURDATE(), INTERVAL 2 DAY), 2.2, (SELECT id FROM usertask WHERE user_id = (SELECT id FROM user WHERE username = 'nferi') and task_id = (SELECT id FROM task WHERE code = 'F12')));

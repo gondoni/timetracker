@@ -25,8 +25,8 @@ public class ProjectService {
 		return projRepo.findAll();
 	}
 	
-	public List<Project> getProjectsByUserId() {
-		Collection coll = projRepo.findByUserId();
+	public List<Project> getProjectsByUsername(String username) {
+		Collection coll = projRepo.findByUsername(username);
 		return (coll instanceof List ? (List)coll : new ArrayList(coll));
 	}
 }

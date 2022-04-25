@@ -3,8 +3,14 @@ package com.timetracker.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.timetracker.entity.Fulfillment;
@@ -12,7 +18,9 @@ import com.timetracker.service.FulfillmentService;
 import com.timetracker.entity.Project;
 import com.timetracker.service.ProjectService;
 import com.timetracker.entity.Task;
+import com.timetracker.repository.FulfillmentRepository;
 import com.timetracker.service.TaskService;
+import com.timetracker.service.UserService;
 
 @RestController
 public class ApiController {
@@ -20,6 +28,13 @@ public class ApiController {
 	private ProjectService projService;
 	private TaskService taskService;
 	private FulfillmentService ffService;
+	private UserService userService;
+	private Authentication authentication;
+	private FulfillmentRepository ffRepo;
+	
+	ApiController(FulfillmentRepository ffRepo) {
+		this.ffRepo = ffRepo;
+	}
 	
 	@Autowired	
 	public void setProjectService(ProjectService projService) {
@@ -36,32 +51,33 @@ public class ApiController {
 		this.ffService = ffService;
 	}
 
+	@RequestMapping("/")
+	public String index() throws Exception {
+		authentication = SecurityContextHolder.getContext().getAuthentication();
+		return "Bejeletkezve: " + authentication.getName();
+	}
 	
-//	@RequestMapping("/title/{title}")
-//	public Story searchForTitle(@PathVariable(value="title") String title) throws Exception {
-//		return storyService.getSpecificStory(title);
-//	}
-
 	@RequestMapping("/projects")
 	public List<Project> projects() throws Exception {
-		return projService.getProjectsByUserId();
-//		return projService.getProjects();
+		authentication = SecurityContextHolder.getContext().getAuthentication();
+		return projService.getProjectsByUsername(authentication.getName());
 	}
 	
 	@RequestMapping("/tasks")
 	public List<Task> tasks() throws Exception {
-		return taskService.getTasksByUserId();
-//		return taskService.getTasks();
+		authentication = SecurityContextHolder.getContext().getAuthentication();
+		return taskService.getTasksByUsername(authentication.getName());
 	}
 
-	@RequestMapping("/fulfillments")
+	@RequestMapping(method = RequestMethod.GET, value = "/fulfillments")
 	public List<Fulfillment> fulfillments() throws Exception {
-		return ffService.getFulfillmentsByUserId();
+		authentication = SecurityContextHolder.getContext().getAuthentication();
+		return ffService.getFulfillmentsByUsername(authentication.getName());
 	}
 	
-//	@RequestMapping("/stories/{name}")
-//	public List<Story> searchStoriesByBloggerName(@PathVariable(value="name") String name) throws Exception {
-//		return storyService.getStoriesByBloggerName(name);
-//	}
-	
+	@RequestMapping(method = RequestMethod.POST, value = "/fulfillments")
+	List<Fulfillment> newFulfillment(@RequestBody Fulfillment newFulfillment) {
+		ffRepo.save(newFulfillment);
+	    return ffService.getFulfillmentsByUsername("nferi");
+	  }
 }

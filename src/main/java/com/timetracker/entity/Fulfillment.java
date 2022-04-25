@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.timetracker.repository.UsertaskRepository;
+
 @Entity
 public class Fulfillment {
 	
@@ -32,7 +34,6 @@ public class Fulfillment {
 		this.hours = hours;
 		this.description = description;
 	}
-	
 	
 	public Fulfillment(Long id, Usertask usertask, Date fulfillDate, Float hours, String description) {
 		this.id = id;

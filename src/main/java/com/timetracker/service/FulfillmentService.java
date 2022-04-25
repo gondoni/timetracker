@@ -24,8 +24,8 @@ public class FulfillmentService {
 		return ffRepo.findAll();
 	}
 	
-	public List<Fulfillment> getFulfillmentsByUserId() {
-		Collection coll = ffRepo.findByUserId();
+	public List<Fulfillment> getFulfillmentsByUsername(String username) {
+		Collection coll = ffRepo.findByUsername(username);
 		return (coll instanceof List ? (List)coll : new ArrayList(coll));
 	}
 

@@ -26,8 +26,8 @@ private TaskRepository taskRepo;
 		return taskRepo.findAll();
 	}
 
-	public List<Task> getTasksByUserId() {
-		Collection coll = taskRepo.findByUserId();
+	public List<Task> getTasksByUsername(String username) {
+		Collection coll = taskRepo.findByUsername(username);
 		return (coll instanceof List ? (List)coll : new ArrayList(coll));
 	}
 
