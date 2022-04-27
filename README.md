@@ -149,6 +149,7 @@ Distributed under the [Moon42 Ltd.](https://www.moon42.com/) License. See `LICEN
 ## Contact
 
 István Gondon - istvan.gondon@moon42.com
+
 Project Link: [https://github.com/gondoni/timetracker](https://github.com/gondoni/timetracker)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
