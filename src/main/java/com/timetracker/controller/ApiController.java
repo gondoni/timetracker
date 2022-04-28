@@ -78,6 +78,7 @@ public class ApiController {
 	@RequestMapping(method = RequestMethod.POST, value = "/fulfillments")
 	List<Fulfillment> newFulfillment(@RequestBody Fulfillment newFulfillment) {
 		ffRepo.save(newFulfillment);
-	    return ffService.getFulfillmentsByUsername("nferi");
+		authentication = SecurityContextHolder.getContext().getAuthentication();
+	    return ffService.getFulfillmentsByUsername(authentication.getName());
 	  }
 }

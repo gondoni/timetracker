@@ -17,16 +17,16 @@ ALTER TABLE usertask ADD CONSTRAINT FK4chcfbnup91ka795vahh3il51 FOREIGN KEY (use
 
 INSERT INTO user (id, name, username, password) VALUES (1, 'Nagy Feri', 'nferi', 'pwd');
 INSERT INTO user (id, name, username, password) VALUES (2, 'Kis Vili', 'kvili', 'pwd');
-INSERT INTO user (id, name, username, password) VALUES (3, 'TÃ³th OttÃ³', 'totto', 'pwd');
-INSERT INTO user (id, name, username, password) VALUES (4, 'SzÃ©p VirÃ¡g', 'szvirag', 'pwd');
+INSERT INTO user (id, name, username, password) VALUES (3, 'Tóth Ottó', 'totto', 'pwd');
+INSERT INTO user (id, name, username, password) VALUES (4, 'Szép Virág', 'szvirag', 'pwd');
 INSERT INTO user (id, name, username, password) VALUES (5, 'Ez Ede', 'ezede', 'pwd');
-INSERT INTO user (id, name, username, password) VALUES (6, 'Mia ManÃ³', 'mmano', 'pwd');
+INSERT INTO user (id, name, username, password) VALUES (6, 'Mia Manó', 'mmano', 'pwd');
 
 INSERT INTO project (id, code, name, description) VALUES (1, 'PR1', 'Projekt1', 'Fontos projekt');
 INSERT INTO project (id, code, name, description) VALUES (2, 'PR2', 'Projekt2', 'Hasznos projekt');
 
 INSERT INTO task (id, code, description, project_id) VALUES (1, 'F11', 'Feladat1, ami fontos', (SELECT id FROM project WHERE code = 'PR1'));
-INSERT INTO task (id, code, description, project_id) VALUES (2, 'F12', 'Feladat2, ami sÃ¼rgÅ‘s', (SELECT id FROM project WHERE code = 'PR1'));
+INSERT INTO task (id, code, description, project_id) VALUES (2, 'F12', 'Feladat2, ami sürgõs', (SELECT id FROM project WHERE code = 'PR1'));
 INSERT INTO task (id, code, description, project_id) VALUES (3, 'F21', 'Feladat3, amit senki sem akar', (SELECT id FROM project WHERE code = 'PR2'));
 INSERT INTO task (id, code, description, project_id) VALUES (4, 'F22', 'Feladat4, ami felesleges', (SELECT id FROM project WHERE code = 'PR2'));
 
@@ -42,6 +42,6 @@ INSERT INTO usertask (id, user_id, task_id) VALUES (9, (SELECT id FROM user WHER
 INSERT INTO usertask (id, user_id, task_id) VALUES (10, (SELECT id FROM user WHERE username = 'mmano'), (SELECT id FROM task WHERE code = 'F22'));
 
 INSERT INTO fulfillment (id, description, fulfill_date, hours, usertask_id) VALUES (1, 'Ez gyors volt!', CURDATE(), 1.5, (SELECT id FROM usertask WHERE user_id = (SELECT id FROM user WHERE username = 'nferi') and task_id = (SELECT id FROM task WHERE code = 'F12')));
-INSERT INTO fulfillment (id, description, fulfill_date, hours, usertask_id) VALUES (2, 'Ez kÃ¶nnyÅ± volt!', DATE_SUB(CURDATE(), INTERVAL 2 DAY), 2.2, (SELECT id FROM usertask WHERE user_id = (SELECT id FROM user WHERE username = 'nferi') and task_id = (SELECT id FROM task WHERE code = 'F12')));
-INSERT INTO fulfillment (id, description, fulfill_date, hours, usertask_id) VALUES (3, 'Ezt nem igazÃ¡n Ã©rtettem!', DATE_SUB(CURDATE(), INTERVAL 2 DAY), 1.1, (SELECT id FROM usertask WHERE user_id = (SELECT id FROM user WHERE username = 'kvili') and task_id = (SELECT id FROM task WHERE code = 'F11')));
-INSERT INTO fulfillment (id, description, fulfill_date, hours, usertask_id) VALUES (4, 'Majd kiderÃ¼l...', DATE_SUB(CURDATE(), INTERVAL 5 DAY), 5.6, (SELECT id FROM usertask WHERE user_id = (SELECT id FROM user WHERE username = 'totto') and task_id = (SELECT id FROM task WHERE code = 'F21')));
+INSERT INTO fulfillment (id, description, fulfill_date, hours, usertask_id) VALUES (2, 'Ez könnyû volt!', DATE_SUB(CURDATE(), INTERVAL 2 DAY), 2.2, (SELECT id FROM usertask WHERE user_id = (SELECT id FROM user WHERE username = 'nferi') and task_id = (SELECT id FROM task WHERE code = 'F12')));
+INSERT INTO fulfillment (id, description, fulfill_date, hours, usertask_id) VALUES (3, 'Ezt nem igazán értettem.', DATE_SUB(CURDATE(), INTERVAL 2 DAY), 1.1, (SELECT id FROM usertask WHERE user_id = (SELECT id FROM user WHERE username = 'kvili') and task_id = (SELECT id FROM task WHERE code = 'F11')));
+INSERT INTO fulfillment (id, description, fulfill_date, hours, usertask_id) VALUES (4, 'Majd kiderül...', DATE_SUB(CURDATE(), INTERVAL 5 DAY), 5.6, (SELECT id FROM usertask WHERE user_id = (SELECT id FROM user WHERE username = 'totto') and task_id = (SELECT id FROM task WHERE code = 'F21')));
